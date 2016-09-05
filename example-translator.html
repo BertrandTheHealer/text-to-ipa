@@ -1,0 +1,28 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+
+        <title>Text to IPA Generator</title>
+
+    </head>
+
+    <body>
+        <script src="./text-to-ipa-min.js"></script>
+		<script src="./tti-ui-min.js"></script>
+
+        <p>Use the following text areas to convert english to it's IPA equivalent.</p>
+        <p>This is NOT case sensitive and punctuation is ignored.</p>
+		<div id="js-text-to-ipa-form">
+			<ul style="list-style-type: none;">
+				<li><textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea></li>
+				<li class="button"><button type="button" id="js-ipa-submit" onClick="TTIForm.convert()">Convert!</button></li>
+				<li><textarea readonly id="ipa-out" placeholder="aʊtpʊt gəʊz hɪə!" rows="4" cols="50"></textarea></li>
+		          </ul>
+			<ul style="list-style-type: none;">
+				<li><noscript><p>This converter will not work unless Javascript is enabled.</p></noscript></li>
+				<li><div id="ipa-err-undef"></div></li>
+				<li><div id="ipa-warn-multi"></div></li>
+			</ul>
+        </div>
+    </body>
+</html>
