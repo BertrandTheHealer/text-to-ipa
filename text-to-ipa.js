@@ -1,65 +1,154 @@
-'use strict';
+//  text-to-ipa.js
 
-var TextToIPA = {
-    location: './ipadict.txt', // Probably should use json, but this dictionary will do
-    ipadict: {}, // Empty IPA dict, gets updated on window load
+//  This file creates a global TextToIPA object containing the public loadDict
+//  and lookup methods as well as the associated private helper objects and methods.
 
-    // Parse array from read file to the dictionary
-    parseDict: function (lines) {
-        console.log("beginning parsing to dict...");
+//  The purpose of this program is to look up an english word in an english-to-ipa
+//  dictionary via lookup() and return an IPAWord to tell if an english word
+//  has multiple IPA pronunciations, as well as the IPA text itself (pronunciations
+//  included).
 
-        for (var i = 0; i < lines.length; i++) {
-            var arr = lines[i].split(/\s+/g);
-            this.ipadict[arr[0]] = arr[1];
-        }
+//      TextToIPA.loadDict(location)
+//          location    Location to load the dictionary from. Since it's gotten
+//                      with an XMLHttpRequest, it can be on the local machine or
+//                      remote
+//          This method produces no output, but will take the location of the
+//          dictionary and parse it into the _IPADict object for fast lookups
+//          with the lookup method. This method _NEEDS_ to be ran before lookup(),
+//          so ideally you would want to run this when the window loads.
 
-        console.log("done parsing");
-    },
+//      TextToIPA.lookup(word)
+//          word        English word that will be searched for in the IPA Dict
+//          This method returns an IPAWord that has an error attribute, and
+//          a text attribute. The error determines if the word exists in IPA,
+//          if the word has multiple pronunciations. The text is the resulting
+//          IPA text of the lookup. See converter-form.js for how to utilize this.
 
-    // Loads dictionary to object for lookups
-    // MUST run when page is loaded, or this entire thing is useless
-    loadDict: function () {
-        console.log('loading dict...');
+// Create a TextToIPA object only if one does not already exist. We create the
+// methods in a closure to avoid creating global variables.
+if (typeof TextToIPA !== 'object') {
+  TextToIPA = {};
+}
+
+(function () {
+  'use strict';
+
+  // Objects
+
+  // Create the ipadict if one does not currently exist. This is important,
+  // as reloading the dict takes long, so if one already exists, let it be.
+  if (typeof TextToIPA._IPADict !== 'object') {
+    TextToIPA._IPADict = {};
+  }
+
+  // Create a constructor for an IPAWord that makes displaying them and
+  // associated errors much easier.
+  // NOTE: This need not exist outside this program.
+  function IPAWord(error, text) {
+    this.error = error;
+    this.text = text;
+  }
+
+  // Functions
+
+  if (typeof TextToIPA._parseDict !== 'function') {
+    TextToIPA._parseDict = function (lines) {
+      console.log('TextToIPA: Beginning parsing to dict...');
+
+      // Fill out the IPA dict by
+      // 1) regexing the word and it's corresponding IPA translation into an array
+      // 2) using the word as the key and the IPA result as the pair
+      for (var i in lines) {
+          var arr = lines[i].split(/\s+/g);
+          TextToIPA._IPADict[arr[0]] = arr[1];
+      }
+
+      console.log('TextToIPA: Done parsing.');
+    };
+  }
+
+  // Load the dictionary. Can be on the local machine or from a GET request.
+  if (typeof TextToIPA.loadDict !== 'function') {
+    TextToIPA.loadDict = function (location) {
+      console.log('TextToIPA: Loading dict from ' + location + '...');
+
+      if (typeof location !== 'string') {
+        console.log('TextToIPA Error: Location is not valid!');
+      } else {
 
         var txtFile = new XMLHttpRequest();
 
-        txtFile.open('GET', this.location, true);
+        txtFile.open('GET', location, true);
 
         txtFile.onreadystatechange = function() {
-          if (txtFile.readyState == 4) {  // document is ready to parse.
-            if (txtFile.status == 200 || txtFile.status == 0) {  // file is found
-              TextToIPA.parseDict(txtFile.responseText.split("\n"));
+          // If document is ready to parse...
+          if (txtFile.readyState == 4) {
+            // And file is found...
+            if (txtFile.status == 200 || txtFile.status == 0) {
+              // Load up the ipa dict
+              TextToIPA._parseDict(txtFile.responseText.split("\n"));
             }
           }
         }
 
         txtFile.send(null);
-    },
-    // Lookup a word in a dictionary
-    // Returns array of type of word pronunciation and the word
-    lookup: function (word) {
+
+      }
+
+    };
+
+  }
+
+  // Lookup function to find an english word's corresponding IPA text
+  if (typeof TextToIPA.lookup !== 'function') {
+
+    TextToIPA.lookup = function (word) {
+
+      if (Object.keys(TextToIPA._IPADict).length === 0) {
+        console.log("TextToIPA Error: No data in TextToIPA._IPADict. Did 'TextToIPA.loadDict()' run?");
+      } else {
         // It is possible to return undefined, so that case should not be ignored
-        if ( typeof this.ipadict[word] != "undefined" ) {
-            // Some words in english have multiple pronunciations (maximum of 4 in this dictionary)
-            // TODO: I think there's a better way of doing this
-            if ( typeof this.ipadict[word + "(1)"] != "undefined" ) {
-                if ( typeof this.ipadict[word + "(2)"] != "undefined" ) {
-                    if ( typeof this.ipadict[word + "(3)"] != "undefined" ) {
-                        return ["multi", this.ipadict[word] + " OR " + this.ipadict[word + "(1)"] + " OR " + this.ipadict[word + "(2)"] + " OR " + this.ipadict[word + "(3)"]]
-                    } else {
-                        return ["multi", this.ipadict[word] + " OR " + this.ipadict[word + "(1)"] + " OR " + this.ipadict[word + "(2)"]]
-                    }
-                } else {
-                    return ["multi", this.ipadict[word] + " OR " + this.ipadict[word + "(1)"]]
-                }
+        if ( typeof TextToIPA._IPADict[word] != "undefined" ) {
+
+          // Some words in english have multiple pronunciations (maximum of 4 in this dictionary)
+          // Therefore we use a trick to get all of them
+
+          // Resulting error, null since we don't know if this word has multiple
+          // pronunciations
+          var error = null;
+          // Text, defaults to the IPA word. We build on this if multiple
+          // pronunciations exist
+          var text = TextToIPA._IPADict[word];
+
+          // Iterate from 1 - 3. There are no more than 3 extra pronunciations.
+          for (var i = 1; i < 4; i++) {
+            // See if pronunciation i exists...
+            if ( typeof TextToIPA._IPADict[word + '(' + i + ')'] != "undefined" ) {
+              // ...If it does we know that the error should be multi and the text
+              // is always itself plus the new pronunciation
+              error = 'multi';
+              text += ' OR ' + TextToIPA._IPADict[word + '(' + i + ')'];
+            // ...Otherwise no need to keep iterating
             } else {
-                return ["normal", this.ipadict[word]]
+              break;
             }
+          }
+
+          // Return the new word
+          return new IPAWord(error, text);
+
         } else {
-            return [undefined, word]
+          return new IPAWord("undefined", word);
         }
-    }
-}
+
+      }
+
+    };
+
+  }
+
+}());
 
 // Load dict
-window.onload = TextToIPA.loadDict();
+// Could be intensive, might only want to load when necessary
+// window.onload = TextToIPA.loadDict('./ipadict.txt');
