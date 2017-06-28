@@ -5,11 +5,18 @@ This comes with the core dictionary lookup and example frontend. This project as
 
 Further reading on how this all takes place can be found inside the respective `.js` files where extensive documentation can be found.
 
-For a more styled and better looking version instead of one that has no CSS you can test it on my website [here](http://surrsur.us/projects/ipa/english-to-ipa.html)
+An example you can use is in the `example-translator.html` file. Just download the repository and open up that file in a web browser.
+
+# Live example
+
+For a styled and better looking version instead of one that has no CSS you can test it on my website [here](http://surrsur.us/projects/ipa/english-to-ipa.html)
 
 # How Does it Work?
 
 This converter will simply look up each word in the CMU to IPA dictionary, and pop out the resulting phonetic text.
 
-This was kind of a pain to get working, as most of the time was found looking for a good IPA dictionary which was ultimately found [here](http://people.umass.edu/nconstan/CMU-IPA/).
+## Note
 
+This tool implies that the CMU-IPA Dictionary _will_ be used. You can load any dictionary you want into this program, but the method to lookup words assumes it will be in the CMU format.
+
+This was kind of a pain to get working, as most of the time was found looking for a good IPA dictionary which was ultimately found [here](http://people.umass.edu/nconstan/CMU-IPA/).
