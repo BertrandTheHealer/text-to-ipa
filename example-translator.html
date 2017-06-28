@@ -15,6 +15,9 @@
 
     <!-- Load dictionary on window load, you may want to change this according to your needs.
     To demonstrate this program, it's just done on window load though.
+    NOTE: This program implies that the CMU IPA dictionary (http://people.umass.edu/nconstan/CMU-IPA/)
+    has been loaded with loadDict(). This dictionary is by default included with this
+    program under the name 'ipadict.txt'. This _WILL NOT WORK_ with any other IPA dictionary.
     -->
     <script>
       window.onload = TextToIPA.loadDict('./ipadict.txt');

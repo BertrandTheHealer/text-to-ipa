@@ -23,7 +23,12 @@
 //          This method produces no output, but will take the value of the inID
 //          text area and convert that text with TextToIPA. If the inID, or
 //          TextToIPA object do not exist or are not objects, the method will
-//          not do anything.
+//          not do anything
+
+// ESLint settings. We want console logging and some problems may exist
+// with undefined objects (ConverterForm, TextToIPA) but we check for these
+// beforehand
+/* eslint-disable no-console, no-undef */
 
 // Create a ConverterForm object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
@@ -52,24 +57,26 @@ if (typeof ConverterForm !== 'object') {
   // Update a specific div by placing a paragraph inside it
   if (typeof ConverterForm._updateParagraph !== 'function') {
     ConverterForm._updateParagraph = function (inID, text) {
-        document.getElementById(inID).innerHTML = '<p>' + text + '</p>';
+      document.getElementById(inID).innerHTML = '<p>' + text + '</p>';
     };
   }
 
   // Update a text area by replacing its contents
   if (typeof ConverterForm._updateTextArea !== 'function') {
     ConverterForm._updateTextArea = function (inID, text) {
-        document.getElementById(inID).value = text;
+      document.getElementById(inID).value = text;
     };
   }
 
   if (typeof ConverterForm.convert !== 'function') {
     ConverterForm.convert = function (inID, outID, errID) {
 
+      // inID must point to a possibly valid ID
       if (typeof inID !== 'string') {
-        console.log("TextToIPA Error: 'inID' called in 'ConverterForm.convert()' is not a valid ID");
+        console.log('TextToIPA Error: "inID" called in "ConverterForm.convert()" is not a valid ID"');
+      // We want TextToIPA to exist, or we can't lookup words
       } else if (typeof TextToIPA !== 'object') {
-        console.log("TextToIPA Error: 'TextToIPA' object not found. Is 'text-to-ipa.js' included before ConverterForm.convert() is ran?");
+        console.log('TextToIPA Error: "TextToIPA" object not found. Is "text-to-ipa.js" included before ConverterForm.convert() is ran?');
       } else {
 
         // Reset the error messages
@@ -87,6 +94,7 @@ if (typeof ConverterForm !== 'object') {
 
           // Lookup the word with TextToIPA. The first element will be the error
           // with the word, the second element will be the converted word itself.
+          // We also strip punctuation and and case.
           var IPAWord = TextToIPA.lookup(englishTextArray[i].toLowerCase().replace(/[^\w\s]|_/g, '').replace(/\s+/g, ' '));
 
           // Does the word exist?
@@ -100,13 +108,13 @@ if (typeof ConverterForm !== 'object') {
           // If it does, see how many pronunciations there are (TextToIPA knows this, and sends all pronunciations regardless)
           } else if (IPAWord.error === 'multi') {
 
-              currentErrorMessage = ConverterForm._multiMsg;
-              IPAText.push(IPAWord.text);
+            currentErrorMessage = ConverterForm._multiMsg;
+            IPAText.push(IPAWord.text);
 
           // Otherwise just push the converted word
           } else {
 
-              IPAText.push(IPAWord.text);
+            IPAText.push(IPAWord.text);
 
           }
 
@@ -119,20 +127,20 @@ if (typeof ConverterForm !== 'object') {
         if (typeof outID === 'string') {
           ConverterForm._updateTextArea(outID, IPAText);
         } else {
-          console.log("TextToIPA Warning: 'outID' in 'ConverterForm.convert()' is not a string, skipping IPA output.");
+          console.log('TextToIPA Warning: "outID" in "ConverterForm.convert()" is not a string, skipping IPA output.');
         }
 
         // Make sure the error exists before outputting errors
         if (typeof errID === 'string') {
           ConverterForm._updateParagraph(errID, currentErrorMessage + ' ' + currentMultiMessage);
         } else {
-          console.log("TextToIPA Warning: 'errID' in 'ConverterForm.convert()' is not a string, skipping error output.");
+          console.log('TextToIPA Warning: "errID" in "ConverterForm.convert()" is not a string, skipping error output.');
         }
 
       }
 
-    }
+    };
 
-  };
+  }
 
 }());

@@ -8,6 +8,10 @@
 //  has multiple IPA pronunciations, as well as the IPA text itself (pronunciations
 //  included).
 
+// NOTE: This program implies that the CMU IPA dictionary (http://people.umass.edu/nconstan/CMU-IPA/)
+// will be used to get IPA translations. This dictionary is by default included with this
+// program under the name 'ipadict.txt'. This _WILL NOT WORK_ with any other IPA dictionary.
+
 //      TextToIPA.loadDict(location)
 //          location    Location to load the dictionary from. Since it's gotten
 //                      with an XMLHttpRequest, it can be on the local machine or
@@ -23,6 +27,11 @@
 //          a text attribute. The error determines if the word exists in IPA,
 //          if the word has multiple pronunciations. The text is the resulting
 //          IPA text of the lookup. See converter-form.js for how to utilize this.
+
+// ESLint settings. We want console logging and some problems may exist
+// with undefined objects (TextToIPA) but we check for these
+// beforehand
+/* eslint-disable no-console, no-undef */
 
 // Create a TextToIPA object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
@@ -59,8 +68,8 @@ if (typeof TextToIPA !== 'object') {
       // 1) regexing the word and it's corresponding IPA translation into an array
       // 2) using the word as the key and the IPA result as the pair
       for (var i in lines) {
-          var arr = lines[i].split(/\s+/g);
-          TextToIPA._IPADict[arr[0]] = arr[1];
+        var arr = lines[i].split(/\s+/g);
+        TextToIPA._IPADict[arr[0]] = arr[1];
       }
 
       console.log('TextToIPA: Done parsing.');
@@ -86,10 +95,10 @@ if (typeof TextToIPA !== 'object') {
             // And file is found...
             if (txtFile.status == 200 || txtFile.status == 0) {
               // Load up the ipa dict
-              TextToIPA._parseDict(txtFile.responseText.split("\n"));
+              TextToIPA._parseDict(txtFile.responseText.split('\n'));
             }
           }
-        }
+        };
 
         txtFile.send(null);
 
@@ -100,15 +109,18 @@ if (typeof TextToIPA !== 'object') {
   }
 
   // Lookup function to find an english word's corresponding IPA text
+  // NOTE: This method implies that the CMU IPA dictionary (http://people.umass.edu/nconstan/CMU-IPA/)
+  // has been loaded with loadDict(). This dictionary is by default included with this
+  // program under the name 'ipadict.txt'. This _WILL NOT WORK_ with any other IPA dictionary.
   if (typeof TextToIPA.lookup !== 'function') {
 
     TextToIPA.lookup = function (word) {
 
       if (Object.keys(TextToIPA._IPADict).length === 0) {
-        console.log("TextToIPA Error: No data in TextToIPA._IPADict. Did 'TextToIPA.loadDict()' run?");
+        console.log('TextToIPA Error: No data in TextToIPA._IPADict. Did "TextToIPA.loadDict()" run?');
       } else {
         // It is possible to return undefined, so that case should not be ignored
-        if ( typeof TextToIPA._IPADict[word] != "undefined" ) {
+        if ( typeof TextToIPA._IPADict[word] != 'undefined' ) {
 
           // Some words in english have multiple pronunciations (maximum of 4 in this dictionary)
           // Therefore we use a trick to get all of them
@@ -123,7 +135,7 @@ if (typeof TextToIPA !== 'object') {
           // Iterate from 1 - 3. There are no more than 3 extra pronunciations.
           for (var i = 1; i < 4; i++) {
             // See if pronunciation i exists...
-            if ( typeof TextToIPA._IPADict[word + '(' + i + ')'] != "undefined" ) {
+            if ( typeof TextToIPA._IPADict[word + '(' + i + ')'] != 'undefined' ) {
               // ...If it does we know that the error should be multi and the text
               // is always itself plus the new pronunciation
               error = 'multi';
@@ -138,7 +150,7 @@ if (typeof TextToIPA !== 'object') {
           return new IPAWord(error, text);
 
         } else {
-          return new IPAWord("undefined", word);
+          return new IPAWord('undefined', word);
         }
 
       }
