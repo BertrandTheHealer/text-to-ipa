@@ -2,7 +2,7 @@
 
 //  This file creates a global ConverterForm object containing the public convert
 //  and all additional helper methods.
-
+ 
 //  The purpose of this program is to act as a tool to help interface with the text-to-ipa.js program
 //  by providing a method to take text input from a text field, output the translated
 //  IPA text, and output any error messages if need be.
