@@ -122,6 +122,7 @@ if (typeof ConverterForm !== 'object') {
 
         // Turn the array to a sentence, and update the DOM
         IPAText = IPAText.join(' ');
+        IPAText = IPAText.replace('j', 'y').replace("ˈ", '');
 
         // Make sure the output ID exists before outputting IPA
         if (typeof outID === 'string') {
