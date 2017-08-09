@@ -1,6 +1,10 @@
 # text-to-phonetic
-Text to Phonetic spelling converter in JavaScript
-Fork of (surrsurus/text-to-ipa)[https://github.com/surrsurus/text-to-ipa]
+Text to IPA converter in JavaScript
+Fork of [surrsurus/text-to-ipa](https://github.com/surrsurus/text-to-ipa)
+
+Changes from the original:
+* Only show the first pronunciation for words that have multiple pronunciations
+* Remove accents
 
 This comes with the core dictionary lookup and example frontend. This project assumes you will be running this translator in a browser of some sort. `text-to-ipa.js` contains the main logic for loading the `ipadict.txt` and looking up words, while `converter-form.js` and `index.html` provide an interface.
 
@@ -10,7 +14,7 @@ An example you can use is in the `index.html` file. Just download the repository
 
 # Live example
 
-For a styled and better looking version instead of one that has no CSS you can test it on my website [here](https://bertrandthehealer.github.io/text-to-phonetic)
+You can test it on my website [here](https://bertrandthehealer.github.io/text-to-phonetic)
 
 # How Does it Work?
 
