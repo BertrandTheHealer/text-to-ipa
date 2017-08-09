@@ -145,7 +145,8 @@ if (typeof TextToIPA !== 'object') {
               break;
             }
           }
-
+          text = text.replace(/ˈ/g, '');
+          console.log('replaced');
           // Return the new word
           return new IPAWord(error, text);
 
