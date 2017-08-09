@@ -1,5 +1,5 @@
 # text-to-phonetic
-Text to IPA converter in JavaScript
+Text to IPA converter in JavaScript.
 Fork of [surrsurus/text-to-ipa](https://github.com/surrsurus/text-to-ipa)
 
 Changes from the original:
