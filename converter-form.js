@@ -49,7 +49,7 @@ if (typeof ConverterForm !== 'object') {
 
   // Error message if a word has multiple pronunciations and therefore multipe IPA translations
   if (typeof ConverterForm._multiMsg !== 'string') {
-    ConverterForm._multiMsg = 'Some words you have entered have multiple pronunciations in english. These differences are seperated with "OR"';
+    ConverterForm._multiMsg = 'Some words you have entered have multiple pronunciations in english. Only the first pronunciation is shown';
   }
 
   // Functions
