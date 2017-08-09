@@ -139,7 +139,7 @@ if (typeof TextToIPA !== 'object') {
               // ...If it does we know that the error should be multi and the text
               // is always itself plus the new pronunciation
               error = 'multi';
-              text += ' OR ' + TextToIPA._IPADict[word + '(' + i + ')'];
+              //text += ' OR ' + TextToIPA._IPADict[word + '(' + i + ')'];
             // ...Otherwise no need to keep iterating
             } else {
               break;
