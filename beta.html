@@ -88,6 +88,12 @@ function SelectText(element) {
                 <textarea class="mdl-textfield__input" type="text" rows= "4" id="ipa-out" readonly></textarea>
                 <label class="mdl-textfield__label" for="ipa-out" id="outputLabel">Awtput Tekst Heer</label>
               </div>
+              <button onclick="SelectText('ipa-out');document.execCommand('copy');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="copybutton">
+              Copy
+            </button>
+            <div class="mdl-tooltip" data-mdl-for="copybutton">
+              Copy phonetic text to clipboard
+            </div>
               <noscript><p style="color:red;">This converter will not work unless Javascript is enabled.</p></noscript>
               <div id="ipa-err" style="display: none;">
                 <p>Errors will go here if you make any. (This will be overwritten!)</p>
@@ -96,12 +102,10 @@ function SelectText(element) {
 
             <h3>How does it work?</h3>
             <p>It's simple: enter text in the upper text field, click "Convert", and the phonetic equivalent appears in the lower text field.</p>
-            <p>Note that I compiled the phonetic dictionary from scratch from <a href="" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free to submit pull requests to my <a href="https://github.com/BertrandTheHealer/text-to-phonetic/" target="_blank">Github repository</a></p>   
-            <button onclick="SelectText('codesnippet');document.execCommand('copy');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="copybutton">
-              Copy
-            </button>
-            <div class="mdl-tooltip" data-mdl-for="copybutton">
-              Copy phonetic text to clipboard
+            <p>Note that I compiled the phonetic dictionary from scratch from <a href="" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free to submit pull requests to my <a href="https://github.com/BertrandTheHealer/text-to-phonetic/" target="_blank">Github repository</a></p>
+            <a href="https://github.com/BertrandTheHealer/text-to-phonetic/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">Github</a>
+            <div class="mdl-tooltip" data-mdl-for="view-source">
+              Visit Github page
             </div>
           </div>
       </main>
