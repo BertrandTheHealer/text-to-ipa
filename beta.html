@@ -22,6 +22,11 @@
       z-index: 900;
     }
     </style>
+    <script src="./minified/text-to-ipa-min.js"></script>
+    <script src="./minified/converter-form-min.js"></script>
+    <script>
+      window.onload = TextToIPA.loadDict('./ipadict2.txt');
+    </script>
     <script>
 function SelectText(element) {
     var doc = document
@@ -64,6 +69,17 @@ function SelectText(element) {
             <div class="demo-crumbs mdl-color-text--grey-500">
               Bertrand The Healer &gt; TextToPhonetic
             </div>
+            
+            <div id="js-text-to-ipa-form">
+              <textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea>
+              <button type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err')">Convert!</button>
+              <textarea readonly id="ipa-out" placeholder="awtput gowz heer!" rows="4" cols="50"></textarea>
+              <noscript><p style="color:red;">This converter will not work unless Javascript is enabled.</p></noscript>
+              <div id="ipa-err" style="display: none;">
+                <p>Errors will go here if you make any. (This will be overwritten!)</p>
+              </div>
+            </div>
+
             <h3>How does it work?</h3>
             <p>It's simple: enter text in the upper text field, click "Convert", and the phonetic equivalent appears in the lower text field.</p>
             <p>Note that I compiled the phonetic dictionary from scratch from <a href="" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free to submit pull requests to my <a href="https://github.com/BertrandTheHealer/text-to-phonetic/" target="_blank">Github repository</a></p>   
