@@ -25,14 +25,6 @@
     <script src="./minified/text-to-ipa-min.js"></script>
     <script src="./minified/converter-form-min.js"></script>
     <script>
-      setInterval(checkBlankness, 100);
-      funcion checkBlankness() {
-        if(document.getElementById('ipa-out').value){
-          document.getElementById('outputLabel').style.visibility='hidden';
-        }else{
-          document.getElementById('outputLabel').style.visibility='visible';
-        }
-      }
       window.onload = TextToIPA.loadDict('./ipadict2.txt');
     </script>
     <script>
@@ -84,7 +76,7 @@ function SelectText(element) {
                 <label class="mdl-textfield__label" for="ipa-in">Input Text Here</label>
               </div>
               <!--<textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea>!-->
-              <button style="display: block;" type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+              <button style="display: block;" type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err');if(document.getElementById('ipa-out').value){document.getElementById('outputLabel').style.visibility='hidden';}else{document.getElementById('outputLabel').style.visibility='visible';}" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
                 Convert
               </button>
               <div class="mdl-tooltip" data-mdl-for="js-ipa-submit">
@@ -93,7 +85,7 @@ function SelectText(element) {
               <!--<button type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err')">Convert!</button>!-->
               <!--<textarea readonly id="ipa-out" placeholder="awtput gowz heer!" rows="4" cols="50"></textarea>!-->
               <div class="mdl-textfield mdl-js-textfield" style="display: block;width:100%">
-                <textarea class="mdl-textfield__input" type="text" rows= "4" id="ipa-out" ></textarea>
+                <textarea class="mdl-textfield__input" type="text" rows= "4" id="ipa-out" readonly></textarea>
                 <label class="mdl-textfield__label" for="ipa-out" id="outputLabel">Awtput Tekst Heer</label>
               </div>
               <noscript><p style="color:red;">This converter will not work unless Javascript is enabled.</p></noscript>
