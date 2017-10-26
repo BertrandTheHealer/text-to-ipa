@@ -71,9 +71,23 @@ function SelectText(element) {
             </div>
             
             <div id="js-text-to-ipa-form">
-              <textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea>
-              <button type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err')">Convert!</button>
-              <textarea readonly id="ipa-out" placeholder="awtput gowz heer!" rows="4" cols="50"></textarea>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows= "4" id="ipa-in"></textarea>
+                <label class="mdl-textfield__label" for="ipa-in">Input Text Here</label>
+              </div>
+              <!--<textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea>!-->
+              <button type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err')" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">
+                Convert
+              </button>
+              <div class="mdl-tooltip" data-mdl-for="js-ipa-submit">
+                Convert text to phonetic spelling
+              </div>
+              <!--<button type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err')">Convert!</button>!-->
+              <!--<textarea readonly id="ipa-out" placeholder="awtput gowz heer!" rows="4" cols="50"></textarea>!-->
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <textarea class="mdl-textfield__input" type="text" rows= "4" id="ipa-out" ></textarea>
+                <label class="mdl-textfield__label" for="ipa-out">Awtput Tekst Heer</label>
+              </div>
               <noscript><p style="color:red;">This converter will not work unless Javascript is enabled.</p></noscript>
               <div id="ipa-err" style="display: none;">
                 <p>Errors will go here if you make any. (This will be overwritten!)</p>
