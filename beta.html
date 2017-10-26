@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Convert English to phonetic pronunciation">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>TextToPhonetic - Bertrand The Healer</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-blue.min.css"/>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    </style>
+    <script>
+function SelectText(element) {
+    var doc = document
+        , text = doc.getElementById(element)
+        , range, selection
+    ;    
+    if (doc.body.createTextRange) {
+        range = document.body.createTextRange();
+        range.moveToElementText(text);
+        range.select();
+    } else if (window.getSelection) {
+        selection = window.getSelection();        
+        range = document.createRange();
+        range.selectNodeContents(text);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+</script>
+  </head>
+  <body>
+    <div class="demo-layout mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-100">
+      <header class="demo-header mdl-layout__header mdl-layout__header--scroll mdl-color--grey-100 mdl-color-text--grey-800">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title">Bertrand the Healer</span>
+          <div class="mdl-layout-spacer"></div>
+          <button class="mdl-button mdl-js-button mdl-button--primary" id="homebutton">
+            <i href="https://bertrandthehealer.github.io/" onclick="window.location.href='https://bertrandthehealer.github.io/'" class="material-icons">home</i>
+          </button>
+          <div class="mdl-tooltip" data-mdl-for="homebutton">
+            Bertrand the Healer homepage
+          </div>
+        </div>
+      </header>
+      <div class="demo-ribbon"></div>
+      <main class="demo-main mdl-layout__content">
+        <div class="demo-container mdl-grid">
+          <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
+          <div class="demo-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col" style="padding: 2em;">
+            <div class="demo-crumbs mdl-color-text--grey-500">
+              Bertrand The Healer &gt; TextToPhonetic
+            </div>
+            <h3>How does it work?</h3>
+            <p>It's simple: enter text in the upper text field, click "Convert", and the phonetic equivalent appears in the lower text field.</p>
+            <p>Note that I compiled the phonetic dictionary from scratch from <a href="" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free to submit pull requests to my <a href="https://github.com/BertrandTheHealer/text-to-phonetic/" target="_blank">Github repository</a></p>   
+            <button onclick="SelectText('codesnippet');document.execCommand('copy');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id="copybutton">
+              Copy
+            </button>
+            <div class="mdl-tooltip" data-mdl-for="copybutton">
+              Copy phonetic text to clipboard
+            </div>
+          </div>
+      </main>
+    </div>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </body>
+</html>
