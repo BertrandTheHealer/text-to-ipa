@@ -27,26 +27,8 @@
     <script src="./minified/converter-form-min.js"></script>
     <script>
         function SelectText(element) {
-            console.log("Select Started on element" + element);
-            var doc = document,
-                text = doc.getElementById(element),
-                range, selection;
-            console.log("vars defined");
-            if (doc.body.createTextRange) {
-                console.log("doc.body.createTextRange is true");
-                range = document.body.createTextRange();
-                range.moveToElementText(text);
-                range.select();
-                console.log("doc.body.createTextRange selected");
-            } else if (window.getSelection) {
-                console.log("window.getSelection is true");
-                selection = window.getSelection();
-                range = document.createRange();
-                range.selectNodeContents(text);
-                selection.removeAllRanges();
-                selection.addRange(range);
-                console.log("window.getSelection selected");
-            }
+            document.getElementById(element).select();
+            document.execCommand('copy');
         }
     </script>
     <script>
@@ -97,7 +79,7 @@
                             <textarea class="mdl-textfield__input" type="text" rows="4" id="ipa-out" readonly></textarea>
                             <label class="mdl-textfield__label" for="ipa-out" id="outputLabel">Awtput Tekst Heer</label>
                         </div>
-                        <button onclick="SelectText('outputContainer');document.execCommand('copy');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" id="copybutton">
+                        <button onclick="SelectText('ipa-out');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" id="copybutton">
                 Copy
               </button>
                         <div class="mdl-tooltip" data-mdl-for="copybutton">

@@ -91,12 +91,22 @@ if (typeof ConverterForm !== 'object') {
 
         // Begin converting
         for (var i in englishTextArray) {
-
+          // Get punctuation/capitalization
+          var capitalized = /^[A-Z]/.test(englishTextArray[i]);
+          var end = englishTextArray[i].slice(-1);
+          end = /[,!?@"'[\]#$%^&*()\.]/.test(end) ? end : "";
+          var start = englishTextArray[i][0];
+          start = /[,!?@"'[\]#$%^&*()\.]/.test(start) ? start : "";
           // Lookup the word with TextToIPA. The first element will be the error
           // with the word, the second element will be the converted word itself.
           // We also strip punctuation and and case.
           var IPAWord = TextToIPA.lookup(englishTextArray[i].toLowerCase().replace(/[^\w\s]|_/g, '').replace(/\s+/g, ' '));
-
+          // Re-insert punctuation/capitalization
+          IPAWord.text = IPAWord.text.concat(end);
+          IPAWord.text = start.concat(IPAWord.text);
+          if (capitalized) {
+            IPAWord.text = IPAWord.text.charAt(0).toUpperCase() + IPAWord.text.slice(1);
+          }
           // Does the word exist?
           if (typeof IPAWord.error === 'undefined') {
 
