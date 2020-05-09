@@ -51,8 +51,7 @@
         <main class="mdl-layout__content">
             <div class="mdl-grid portfolio-max-width">
                 <div class="mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
-
-                    <div id="js-text-to-ipa-form">
+                    <div id="js-text-to-ipa-form" class="mdl-card__supporting-text">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="display: block;width:100%">
                             <textarea class="mdl-textfield__input" type="text" rows="4" id="ipa-in"></textarea>
                             <label class="mdl-textfield__label" for="ipa-in">Input Text Here</label>
@@ -60,8 +59,8 @@
                         <!--<textarea id="ipa-in" placeholder="Write text here!" rows="4" cols="50"></textarea>!-->
                         <button style="display: block;" type="button" id="js-ipa-submit" onClick="ConverterForm.convert('ipa-in', 'ipa-out', 'ipa-err');if(document.getElementById('ipa-out').value){document.getElementById('outputLabel').style.visibility='hidden';}else{document.getElementById('outputLabel').style.visibility='visible';}"
                             class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
-                Convert
-              </button>
+                            Convert
+                        </button>
                         <div class="mdl-tooltip" data-mdl-for="js-ipa-submit">
                             Convert text to phonetic spelling
                         </div>
@@ -72,8 +71,8 @@
                             <label class="mdl-textfield__label" for="ipa-out" id="outputLabel">Awtput Tekst Heer</label>
                         </div>
                         <button onclick="SelectText('ipa-out');" class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect" id="copybutton">
-                Copy
-              </button>
+                            Copy
+                        </button>
                         <div class="mdl-tooltip" data-mdl-for="copybutton">
                             Copy phonetic text to clipboard
                         </div>
@@ -82,11 +81,12 @@
                             <p>Errors will go here if you make any. (This will be overwritten!)</p>
                         </div>
                     </div>
-
-                    <h3>How does it work?</h3>
-                    <p>It's simple: enter text in the upper text field, click "Convert", and the phonetic equivalent appears in the lower text field.</p>
-                    <p>Note that I compiled the phonetic dictionary from scratch from <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free
-                        to submit pull requests to my <a href="https://github.com/max-davy/text-to-phonetic/" target="_blank">Github repository</a></p>
+                    <div class="mdl-card__supporting-text">
+                        <h3>How does it work?</h3>
+                        <p>It's simple: enter text in the upper text field, click "Convert", and the phonetic equivalent appears in the lower text field.</p>
+                        <p>Note that I compiled the phonetic dictionary from scratch from <a href="http://www.speech.cs.cmu.edu/cgi-bin/cmudict" target="_blank">here</a> so there will be a few errors.<br>If you want to help fix these errors please feel free
+                            to submit pull requests to my <a href="https://github.com/max-davy/text-to-phonetic/" target="_blank">Github repository</a></p>
+                    </div>
                     <a href="https://github.com/max-davy/text-to-phonetic/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent mdl-color-text--white">Github</a>
                     <div class="mdl-tooltip" data-mdl-for="view-source">
                         Visit Github page
